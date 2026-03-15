@@ -1,0 +1,8 @@
+{
+  "rank": "81",
+  "slug": "hf-emilyalsentzer-bio-clinicalbert",
+  "title": "Bio_ClinicalBERT",
+  "source_url": "https://huggingface.co/emilyalsentzer/Bio_ClinicalBERT",
+  "domain": "clinical-nlp",
+  "task": "embedding-generation"
+}

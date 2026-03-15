@@ -1,0 +1,42 @@
+{
+  "source_model_id": "facebook/esm2_t6_8M_UR50D",
+  "artifact": "artifacts/model.onnx",
+  "artifact_size_bytes": 30297730,
+  "inputs": [
+    {
+      "name": "input_ids",
+      "shape": [
+        "batch",
+        "sequence"
+      ],
+      "dtype": "tensor(int64)"
+    },
+    {
+      "name": "attention_mask",
+      "shape": [
+        "batch",
+        "sequence"
+      ],
+      "dtype": "tensor(int64)"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "last_hidden_state",
+      "shape": [
+        "batch",
+        "sequence",
+        320
+      ],
+      "dtype": "tensor(float)"
+    },
+    {
+      "name": "pooled_output",
+      "shape": [
+        "batch",
+        320
+      ],
+      "dtype": "tensor(float)"
+    }
+  ]
+}

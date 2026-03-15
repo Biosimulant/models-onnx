@@ -1,0 +1,12 @@
+{
+  "rank": "46",
+  "slug": "monai-pancreas-ct-dints-segmentation",
+  "title": "Pancreas CT DINTS Segmentation",
+  "source_url": "https://api.ngc.nvidia.com/v2/models/nvidia/monaihosting/pancreas_ct_dints_segmentation/versions/0.1.0/files/pancreas_ct_dints_segmentation_v0.1.0.zip",
+  "modality": "ct",
+  "task": "segmentation",
+  "input_name": "image",
+  "output_name": "pred",
+  "input_shape": [1, 1, 96, 96, 96],
+  "output_shape": [1, 3, 96, 96, 96]
+}

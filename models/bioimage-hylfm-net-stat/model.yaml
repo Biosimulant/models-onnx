@@ -1,0 +1,41 @@
+schema_version: "2.0"
+title: "BioImage: BioimageHylfmNetStat"
+description: "HyLFM-Net trained on static images of arrested medaka hatchling hearts."
+standard: onnx
+tags: [bioimage, onnx, light-field-microscopy, pytorch, fluorescence-light-microscopy, image-reconstruction, nuclei]
+authors: ["Biosimulant Team"]
+biosim:
+  entrypoint: "src.imported_bioimage_model:BioimageHylfmNetStat"
+  init_kwargs:
+    model_path: "artifacts/model.onnx"
+    input_port: "lf_image"
+    output_port: "reconstruction_volume"
+    model_input_name: "0"
+    model_output_name: "220"
+    input_shape: [1, 1, 1235, 1425]
+    output_shape: [1, 1, 49, 244, 284]
+io:
+  inputs:
+    - lf_image
+  outputs:
+    - reconstruction_volume
+    - prediction_summary
+runtime:
+  dependencies:
+    packages:
+      - onnxruntime==1.22.1
+onnx:
+  task: image-reconstruction
+  model_file: "artifacts/model.onnx"
+  inputs:
+    - name: "0"
+      dtype: float32
+      shape: [1, 1, 1235, 1425]
+  outputs:
+    - name: "220"
+      dtype: float32
+      shape: [1, 1, 49, 244, 284]
+license: MIT
+source:
+  rdf: "https://bioimage-io.github.io/collection-bioimage-io/rdfs/10.5281/zenodo.7614645/7642674/rdf.yaml"
+  onnx: "https://zenodo.org/api/records/7642674/files/weights.onnx/content"

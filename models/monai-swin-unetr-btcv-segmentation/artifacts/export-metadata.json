@@ -1,0 +1,24 @@
+{
+  "source_checkpoint": "https://huggingface.co/MONAI/swin_unetr_btcv_segmentation/resolve/main/models/model.pt",
+  "exported_with": {
+    "torch": "2.10.0",
+    "opset": 17,
+    "dynamo": false
+  },
+  "input_name": "image",
+  "output_name": "pred",
+  "input_shape": [
+    1,
+    1,
+    96,
+    96,
+    96
+  ],
+  "output_shape": [
+    1,
+    14,
+    96,
+    96,
+    96
+  ]
+}

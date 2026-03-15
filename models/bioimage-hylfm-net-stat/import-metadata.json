@@ -1,0 +1,31 @@
+{
+  "rank": "36",
+  "slug": "bioimage-hylfm-net-stat",
+  "name": "HyLFM-Net-stat",
+  "license": "MIT",
+  "tags": [
+    "light-field-microscopy",
+    "pytorch",
+    "fluorescence-light-microscopy",
+    "image-reconstruction",
+    "nuclei",
+    "hylfm"
+  ],
+  "input_name": "0",
+  "output_name": "220",
+  "input_shape": [
+    1,
+    1,
+    1235,
+    1425
+  ],
+  "output_shape": [
+    1,
+    1,
+    49,
+    244,
+    284
+  ],
+  "rdf_source": "https://bioimage-io.github.io/collection-bioimage-io/rdfs/10.5281/zenodo.7614645/7642674/rdf.yaml",
+  "onnx_source": "https://zenodo.org/api/records/7642674/files/weights.onnx/content"
+}

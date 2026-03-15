@@ -1,0 +1,8 @@
+{
+  "rank": "86",
+  "slug": "hf-facebook-esm2-t12-35m-ur50d",
+  "title": "esm2_t12_35M_UR50D",
+  "source_url": "https://huggingface.co/facebook/esm2_t12_35M_UR50D",
+  "domain": "protein-language-model",
+  "task": "embedding-generation"
+}

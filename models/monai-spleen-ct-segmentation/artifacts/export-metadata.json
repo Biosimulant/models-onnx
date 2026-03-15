@@ -1,0 +1,40 @@
+{
+  "source_bundle": "/tmp/monai-spleen-wget.zip",
+  "artifact": "artifacts/model.onnx",
+  "artifact_size_bytes": 19246591,
+  "inputs": [
+    {
+      "name": "image",
+      "shape": [
+        1,
+        1,
+        96,
+        96,
+        96
+      ],
+      "dtype": "tensor(float)"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "pred",
+      "shape": [
+        1,
+        2,
+        96,
+        96,
+        96
+      ],
+      "dtype": "tensor(float)"
+    }
+  ],
+  "validation_output_shapes": [
+    [
+      1,
+      2,
+      96,
+      96,
+      96
+    ]
+  ]
+}

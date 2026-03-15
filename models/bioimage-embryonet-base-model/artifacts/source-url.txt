@@ -1,0 +1,1 @@
+https://zenodo.org/api/records/7315441/files/EmbryoNet_GPU_batch_1.onnx/content

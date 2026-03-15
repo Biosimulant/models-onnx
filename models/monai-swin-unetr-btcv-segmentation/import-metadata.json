@@ -1,0 +1,12 @@
+{
+  "rank": "49",
+  "slug": "monai-swin-unetr-btcv-segmentation",
+  "title": "Swin UNETR BTCV Segmentation",
+  "source_url": "https://api.ngc.nvidia.com/v2/models/nvidia/monaihosting/swin_unetr_btcv_segmentation/versions/0.1.0/files/swin_unetr_btcv_segmentation_v0.1.0.zip",
+  "modality": "medical-imaging",
+  "task": "segmentation",
+  "input_name": "image",
+  "output_name": "pred",
+  "input_shape": [1, 1, 96, 96, 96],
+  "output_shape": [1, 14, 96, 96, 96]
+}

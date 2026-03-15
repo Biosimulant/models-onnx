@@ -1,0 +1,8 @@
+{
+  "rank": "87",
+  "slug": "hf-allenai-scibert-scivocab-uncased",
+  "title": "scibert_scivocab_uncased",
+  "source_url": "https://huggingface.co/allenai/scibert_scivocab_uncased",
+  "domain": "scientific-nlp",
+  "task": "embedding-generation"
+}

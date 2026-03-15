@@ -1,0 +1,41 @@
+schema_version: "2.0"
+title: "BioImage: BioimageNucleisegmentationboundarymodel"
+description: "Nucleus segmentation for fluorescence microscopy"
+standard: onnx
+tags: [bioimage, onnx, fluorescence-light-microscopy, nuclei, instance-segmentation, unet, 2d]
+authors: ["Biosimulant Team"]
+biosim:
+  entrypoint: "src.imported_bioimage_model:BioimageNucleisegmentationboundarymodel"
+  init_kwargs:
+    model_path: "artifacts/model.onnx"
+    input_port: "image"
+    output_port: "segmentation_logits"
+    model_input_name: "input.1"
+    model_output_name: "506"
+    input_shape: [1, 1, 256, 256]
+    output_shape: [1, 2, 256, 256]
+io:
+  inputs:
+    - image
+  outputs:
+    - segmentation_logits
+    - prediction_summary
+runtime:
+  dependencies:
+    packages:
+      - onnxruntime==1.22.1
+onnx:
+  task: segmentation
+  model_file: "artifacts/model.onnx"
+  inputs:
+    - name: input.1
+      dtype: float32
+      shape: [1, 1, 256, 256]
+  outputs:
+    - name: 506
+      dtype: float32
+      shape: [1, 2, 256, 256]
+license: CC-BY-4.0
+source:
+  rdf: "https://bioimage-io.github.io/collection-bioimage-io/rdfs/10.5281/zenodo.5764892/6647674/rdf.yaml"
+  onnx: "https://zenodo.org/api/records/6647674/files/weights.onnx/content"

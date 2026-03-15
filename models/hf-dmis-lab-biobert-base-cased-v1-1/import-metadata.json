@@ -1,0 +1,8 @@
+{
+  "rank": "84",
+  "slug": "hf-dmis-lab-biobert-base-cased-v1-1",
+  "title": "biobert-base-cased-v1.1",
+  "source_url": "https://huggingface.co/dmis-lab/biobert-base-cased-v1.1",
+  "domain": "biomedical-nlp",
+  "task": "embedding-generation"
+}

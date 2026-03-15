@@ -1,0 +1,18 @@
+{
+  "export_date": "2026-03-15",
+  "exporter": "transformers.onnx",
+  "source_model_id": "dmis-lab/biobert-base-cased-v1.1",
+  "framework": "pt",
+  "opset": 17,
+  "artifact": "artifacts/model.onnx",
+  "artifact_size_bytes": 433476405,
+  "inputs": [
+    {"name": "input_ids", "dtype": "int64", "shape": ["batch", "sequence"]},
+    {"name": "attention_mask", "dtype": "int64", "shape": ["batch", "sequence"]},
+    {"name": "token_type_ids", "dtype": "int64", "shape": ["batch", "sequence"]}
+  ],
+  "outputs": [
+    {"name": "last_hidden_state", "dtype": "float32", "shape": ["batch", "sequence", 768]},
+    {"name": "pooled_output", "dtype": "float32", "shape": ["batch", 768]}
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "inspection_date": "2026-03-15",
+  "source_url": "https://api.ngc.nvidia.com/v2/models/nvidia/monaihosting/spleen_ct_segmentation/versions/0.1.0/files/spleen_ct_segmentation_v0.1.0.zip",
+  "archive_size_bytes": 35561649,
+  "archive_files": [
+    "spleen_ct_segmentation/configs/evaluate.json",
+    "spleen_ct_segmentation/configs/inference.json",
+    "spleen_ct_segmentation/configs/logging.conf",
+    "spleen_ct_segmentation/configs/metadata.json",
+    "spleen_ct_segmentation/configs/multi_gpu_train.json",
+    "spleen_ct_segmentation/configs/train.json",
+    "spleen_ct_segmentation/docs/license.txt",
+    "spleen_ct_segmentation/docs/README.md",
+    "spleen_ct_segmentation/models/model.pt",
+    "spleen_ct_segmentation/models/model.ts"
+  ],
+  "contains_onnx": false,
+  "contains_torchscript": true,
+  "contains_pytorch": true,
+  "next_step": "Extract bundle metadata and export the TorchScript or PyTorch checkpoint to a stable model.onnx artifact before indexing."
+}

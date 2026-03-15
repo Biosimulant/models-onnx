@@ -1,0 +1,1 @@
+https://api.ngc.nvidia.com/v2/models/nvidia/monaihosting/swin_unetr_btcv_segmentation/versions/0.1.0/files/swin_unetr_btcv_segmentation_v0.1.0.zip

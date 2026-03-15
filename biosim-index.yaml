@@ -1,0 +1,17 @@
+models:
+  - models/bioimage-nucleisegmentationboundarymodel/model.yaml
+  - models/bioimage-hpa-bestfitting-inceptionv3/model.yaml
+  - models/bioimage-hylfm-net-stat/model.yaml
+  - models/bioimage-hpa-bestfitting-densenet/model.yaml
+  - models/bioimage-embryonet-base-model/model.yaml
+  - models/monai-brats-mri-segmentation/model.yaml
+  - models/monai-pancreas-ct-dints-segmentation/model.yaml
+  - models/monai-spleen-deepedit-annotation/model.yaml
+  - models/monai-spleen-ct-segmentation/model.yaml
+  - models/monai-swin-unetr-btcv-segmentation/model.yaml
+  - models/hf-allenai-scibert-scivocab-uncased/model.yaml
+  - models/hf-dmis-lab-biobert-base-cased-v1-1/model.yaml
+  - models/hf-emilyalsentzer-bio-clinicalbert/model.yaml
+  - models/hf-facebook-esm2-t6-8m-ur50d/model.yaml
+  - models/hf-facebook-esm2-t12-35m-ur50d/model.yaml
+spaces: []

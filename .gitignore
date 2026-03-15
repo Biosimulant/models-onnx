@@ -1,0 +1,7 @@
+.cache/
+.validation-cache/
+.venv-export-min/
+.pytest_cache/
+__pycache__/
+validation/
+artifacts/export-cache/

@@ -1,0 +1,29 @@
+{
+  "rank": "26",
+  "slug": "bioimage-hpa-bestfitting-inceptionv3",
+  "name": "HPA Bestfitting InceptionV3",
+  "license": "MIT",
+  "tags": [
+    "classification",
+    "inception-v3",
+    "hpa",
+    "onnx",
+    "cells",
+    "protein-localization"
+  ],
+  "input_name": "image",
+  "output_name": "classes",
+  "input_shape": [
+    1,
+    4,
+    128,
+    128
+  ],
+  "feature_output_name": "features",
+  "feature_shape": [
+    1,
+    2048
+  ],
+  "rdf_source": "https://bioimage-io.github.io/collection-bioimage-io/rdfs/10.5281/zenodo.5910854/6539073/rdf.yaml",
+  "onnx_source": "https://zenodo.org/api/records/6539073/files/bestfitting-inceptionv3-single-cell.onnx/content"
+}

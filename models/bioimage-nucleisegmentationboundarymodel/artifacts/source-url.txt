@@ -1,0 +1,1 @@
+https://zenodo.org/api/records/6647674/files/weights.onnx/content

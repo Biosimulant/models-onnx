@@ -1,0 +1,29 @@
+{
+  "rank": "30",
+  "slug": "bioimage-hpa-bestfitting-densenet",
+  "name": "HPA Bestfitting Densenet",
+  "license": "MIT",
+  "tags": [
+    "classification",
+    "densenet-121",
+    "hpa",
+    "onnx",
+    "cells",
+    "protein-localization"
+  ],
+  "input_name": "image",
+  "output_name": "classes",
+  "input_shape": [
+    1,
+    4,
+    1024,
+    1024
+  ],
+  "feature_output_name": "features",
+  "feature_shape": [
+    1,
+    1024
+  ],
+  "rdf_source": "https://bioimage-io.github.io/collection-bioimage-io/rdfs/10.5281/zenodo.5910163/5942853/rdf.yaml",
+  "onnx_source": "https://zenodo.org/api/records/5942853/files/densenet_model.onnx/content"
+}

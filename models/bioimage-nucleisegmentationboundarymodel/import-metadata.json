@@ -1,0 +1,29 @@
+{
+  "rank": "1",
+  "slug": "bioimage-nucleisegmentationboundarymodel",
+  "name": "NucleiSegmentationBoundaryModel",
+  "license": "CC-BY-4.0",
+  "tags": [
+    "fluorescence-light-microscopy",
+    "nuclei",
+    "instance-segmentation",
+    "unet",
+    "2d"
+  ],
+  "input_name": "input.1",
+  "output_name": "506",
+  "input_shape": [
+    1,
+    1,
+    256,
+    256
+  ],
+  "output_shape": [
+    1,
+    2,
+    256,
+    256
+  ],
+  "rdf_source": "https://bioimage-io.github.io/collection-bioimage-io/rdfs/10.5281/zenodo.5764892/6647674/rdf.yaml",
+  "onnx_source": "https://zenodo.org/api/records/6647674/files/weights.onnx/content"
+}
