@@ -1,5 +1,5 @@
 schema_version: "2.0"
-title: "BioImage: BioimageNucleisegmentationboundarymodel"
+title: "Bioimage Nucleisegmentationboundarymodel"
 description: "Nucleus segmentation for fluorescence microscopy"
 standard: onnx
 tags: [bioimage, onnx, fluorescence-light-microscopy, nuclei, instance-segmentation, unet, 2d]

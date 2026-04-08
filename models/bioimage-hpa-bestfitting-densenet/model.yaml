@@ -1,5 +1,5 @@
 schema_version: "2.0"
-title: "BioImage: BioimageHpaBestfittingDensenet"
+title: "Bioimage Hpa Bestfitting Densenet"
 description: "The winning model of HPA image classification 2019 by Bestfitting"
 standard: onnx
 tags: [bioimage, onnx, classification, densenet-121, hpa, onnx, cells]

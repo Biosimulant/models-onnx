@@ -1,5 +1,5 @@
 schema_version: "2.0"
-title: "BioImage: BioimageEmbryonetBaseModel"
+title: "Bioimage Embryonet Base"
 description: "EmbryoNet Model by embryoNet Team"
 standard: onnx
 tags: [bioimage, onnx, classification, resnet-18, embryology, onnx, embryo]

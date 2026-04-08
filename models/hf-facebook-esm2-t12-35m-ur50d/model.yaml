@@ -1,5 +1,5 @@
 schema_version: "2.0"
-title: "Transformer: HfFacebookEsm2T1235mUr50d"
+title: "Hf Facebook Esm2 T1235m Ur50d"
 description: "Imported Hugging Face transformer ONNX export for ESM-2 t12 with token-level and pooled protein embeddings."
 standard: onnx
 tags: [transformer, onnx, protein-language-model, imported]

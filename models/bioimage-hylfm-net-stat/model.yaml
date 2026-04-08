@@ -1,5 +1,5 @@
 schema_version: "2.0"
-title: "BioImage: BioimageHylfmNetStat"
+title: "Bioimage Hylfm Net Stat"
 description: "HyLFM-Net trained on static images of arrested medaka hatchling hearts."
 standard: onnx
 tags: [bioimage, onnx, light-field-microscopy, pytorch, fluorescence-light-microscopy, image-reconstruction, nuclei]

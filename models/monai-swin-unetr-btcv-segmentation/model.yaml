@@ -1,5 +1,5 @@
 schema_version: "2.0"
-title: "MONAI: MonaiSwinUnetrBtcvSegmentation"
+title: "Monai Swin Unetr Btcv Segmentation"
 description: "Imported MONAI ONNX export for 3D BTCV Swin UNETR segmentation."
 standard: onnx
 tags: [monai, onnx, medical-imaging, segmentation, imported]

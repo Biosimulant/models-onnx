@@ -1,5 +1,5 @@
 schema_version: "2.0"
-title: "MONAI: MonaiSpleenCtSegmentation"
+title: "Monai Spleen Ct Segmentation"
 description: "Imported MONAI ONNX export for 3D spleen CT segmentation."
 standard: onnx
 tags: [monai, onnx, ct, segmentation, imported]

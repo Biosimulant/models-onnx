@@ -1,5 +1,5 @@
 schema_version: "2.0"
-title: "MONAI: MonaiBratsMriSegmentation"
+title: "Monai Brats Mri Segmentation"
 description: "Imported MONAI ONNX export for 3D BRATS multimodal MRI segmentation."
 standard: onnx
 tags: [monai, onnx, mri, segmentation, imported]

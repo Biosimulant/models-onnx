@@ -1,5 +1,5 @@
 schema_version: "2.0"
-title: "BioImage: BioimageHpaBestfittingInceptionv3"
+title: "Bioimage Hpa Bestfitting Inceptionv3"
 description: "The winning model of HPA image classification 2021 by Bestfitting"
 standard: onnx
 tags: [bioimage, onnx, classification, inception-v3, hpa, onnx, cells]
