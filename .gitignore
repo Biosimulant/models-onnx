@@ -1,3 +1,4 @@
+.DS_Store
 .cache/
 .validation-cache/
 .venv-export-min/
