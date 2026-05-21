@@ -1,0 +1,72 @@
+# SPDX-License-Identifier: MIT
+name: Stage Biosimulant ONNX Lab Packages
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: GitHub release tag used to stage .bsilab packages.
+        required: true
+        default: onnx-publish-packages
+      labs:
+        description: Optional space-separated lab slugs. Leave blank for all labs.
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  stage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install packaging dependencies
+        run: python -m pip install --upgrade pip pyyaml
+
+      - name: Build .bsilab packages
+        shell: bash
+        env:
+          REQUESTED_LABS: ${{ inputs.labs }}
+        run: |
+          set -euo pipefail
+          version="0.1.0+$(date -u +%Y%m%d%H%M%S)"
+          if [[ -n "$REQUESTED_LABS" ]]; then
+            read -r -a labs <<< "$REQUESTED_LABS"
+            python scripts/build_lab_packages.py --version "$version" --output-dir artifacts/release-packages "${labs[@]}" | tee artifacts/release-packages/packages.tsv
+          else
+            python scripts/build_lab_packages.py --version "$version" --output-dir artifacts/release-packages | tee artifacts/release-packages/packages.tsv
+          fi
+
+      - name: Create or update release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="${{ inputs.release_tag }}"
+          if ! gh release view "$tag" >/dev/null 2>&1; then
+            gh release create "$tag" --title "$tag" --notes "Staged Biosimulant ONNX lab packages for Hub server-side import."
+          fi
+          gh release upload "$tag" artifacts/release-packages/*.bsilab artifacts/release-packages/packages.tsv --clobber
+
+      - name: Print staged URLs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="${{ inputs.release_tag }}"
+          gh release view "${{ inputs.release_tag }}" --json assets \
+            --jq '.assets[] | select(.name | endswith(".bsilab")) | .name' \
+            | while IFS= read -r name; do
+                printf '%s\t%s\n' "$name" "https://github.com/${{ github.repository }}/releases/download/${tag}/${name}"
+              done

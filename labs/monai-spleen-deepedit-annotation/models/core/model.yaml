@@ -1,0 +1,75 @@
+schema_version: '2.0'
+title: Monai Spleen Deepedit Annotation
+description: Imported MONAI ONNX export for 3D spleen DeepEdit annotation.
+standard: onnx
+tags:
+- monai
+- onnx
+- medical-imaging
+- annotation
+- imported
+authors:
+- Biosimulant Team
+biosim:
+  communication_step: 0.01
+  entrypoint: src.imported_monai_model:MonaiSpleenDeepeditAnnotation
+  init_kwargs:
+    model_path: artifacts/model.onnx
+    model_input_name: image
+    model_output_name: pred
+    input_shape:
+    - 1
+    - 3
+    - 128
+    - 128
+    - 128
+    output_shape:
+    - 1
+    - 2
+    - 128
+    - 128
+    - 128
+    input_port: ct_volume_with_guidance_channels
+    output_port: segmentation_prediction_tensor
+    summary_port: segmentation_summary
+io:
+  inputs:
+  - name: ct_volume_with_guidance_channels
+    maps_to: image
+    description: Input maps to ONNX graph input `image` and is a preprocessed CT volume
+      with guidance channels.
+  outputs:
+  - name: segmentation_prediction_tensor
+    maps_to: pred
+    description: Compact tensor evidence derived from the source-derived ONNX graph output.
+  - name: segmentation_summary
+    maps_to: pred
+    description: Shape and value summary derived from the ONNX segmentation output
+      tensor.
+runtime:
+  dependencies:
+    packages:
+    - onnxruntime==1.22.1
+onnx:
+  task: annotation
+  model_file: artifacts/model.onnx
+  inputs:
+  - name: image
+    dtype: float32
+    shape:
+    - 1
+    - 3
+    - 128
+    - 128
+    - 128
+  outputs:
+  - name: pred
+    dtype: float32
+    shape:
+    - 1
+    - 2
+    - 128
+    - 128
+    - 128
+source:
+  bundle: https://api.ngc.nvidia.com/v2/models/nvidia/monaihosting/spleen_deepedit_annotation/versions/0.1.0/files/spleen_deepedit_annotation_v0.1.0.zip

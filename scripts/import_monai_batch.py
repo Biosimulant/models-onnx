@@ -62,10 +62,10 @@ from __future__ import annotations
 
 import importlib
 from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional, Sequence, Set
+from typing import Any, Callable, Dict, List, Optional, Sequence
 
 from biosim import BioModule
-from biosim.signals import BioSignal, SignalMetadata
+from biosim.signals import (AcceptedSignalProfile, ArraySignal, BioSignal, EventSignal, RecordSignal, ScalarSignal, SignalSpec)
 
 
 def _flatten(value: Any) -> List[float]:
@@ -90,6 +90,60 @@ def _reshape(flat: Sequence[float], shape: Sequence[int]) -> Any:
     return [_reshape(flat[idx * stride : (idx + 1) * stride], shape[1:]) for idx in range(shape[0])]
 
 
+def _schema_type(value):
+    if isinstance(value, bool):
+        return "bool"
+    if isinstance(value, int) and not isinstance(value, bool):
+        return "int"
+    if isinstance(value, float):
+        return "float"
+    if isinstance(value, str):
+        return "str"
+    return "json"
+
+
+def _signal_value(signal):
+    value = signal.value
+    if isinstance(value, dict) and set(value.keys()) == {"payload"}:
+        return value["payload"]
+    return value
+
+
+def _generic_input_spec(description=None):
+    return SignalSpec.record(
+        schema={"payload": "json"},
+        accepted_profiles=(
+            AcceptedSignalProfile(signal_type="record", schema={"payload": "json"}),
+            AcceptedSignalProfile(signal_type="scalar"),
+        ),
+        description=description,
+    )
+
+
+def _make_signal(*, source, name, value, emitted_at, spec=None):
+    if spec is None:
+        if isinstance(value, dict):
+            spec = SignalSpec.record(schema={str(key): _schema_type(item) for key, item in value.items()})
+        elif isinstance(value, (list, tuple)):
+            spec = SignalSpec.record(schema={"payload": "json"})
+        else:
+            spec = SignalSpec.scalar(dtype=_schema_type(value))
+
+    if spec.signal_type == "scalar":
+        return ScalarSignal(source=source, name=name, value=value, emitted_at=emitted_at, spec=spec)
+    if spec.signal_type == "array":
+        return ArraySignal(source=source, name=name, value=value, emitted_at=emitted_at, spec=spec)
+    if spec.signal_type == "event":
+        event_value = value
+        if spec.schema is not None and not (isinstance(value, dict) and set(value.keys()) == set(spec.schema.keys())):
+            event_value = {"payload": value}
+        return EventSignal(source=source, name=name, value=event_value, emitted_at=emitted_at, spec=spec)
+
+    record_value = value
+    if not isinstance(value, dict) or set(value.keys()) != set((spec.schema or {}).keys()):
+        record_value = {"payload": value}
+    return RecordSignal(source=source, name=name, value=record_value, emitted_at=emitted_at, spec=spec)
+
 class {class_name}(BioModule):
     \"\"\"Scaffolded MONAI wrapper pending bundle inspection and ONNX export.\"\"\"
 
@@ -104,11 +158,11 @@ class {class_name}(BioModule):
         input_shape: Sequence[int] = (1, 1, 4, 4, 4),
         output_shape: Sequence[int] = (1, 2, 4, 4, 4),
         base_dir: Optional[str] = None,
-        min_dt: float = 0.01,
+        integration_step: float = 0.01,
         session_factory: Optional[Callable[[str], Any]] = None,
         providers: Optional[Sequence[str]] = None,
     ) -> None:
-        self.min_dt = min_dt
+        self.integration_step = float(integration_step)
         self.model_path = model_path
         self.input_port = input_port
         self.output_port = output_port
@@ -152,22 +206,23 @@ class {class_name}(BioModule):
                 self.model_output_name = str(outputs[0].name)
         return self._session
 
-    def inputs(self) -> Set[str]:
-        return {{self.input_port}}
+    def inputs(self) -> dict[str, SignalSpec]:
+        return {}
 
-    def outputs(self) -> Set[str]:
-        return {{self.output_port, self.summary_port}}
+    def outputs(self) -> dict[str, SignalSpec]:
+        return {}
 
     def set_inputs(self, signals: Dict[str, BioSignal]) -> None:
         signal = signals.get(self.input_port)
         if signal is None:
             return
-        flat = _flatten(signal.value)
+        flat = _flatten(_signal_value(signal))
         needed = self._element_count(self.input_shape)
         flat = flat[:needed] + [0.0] * max(0, needed - len(flat))
         self._latest_input = _reshape(flat, self.input_shape)
 
-    def advance_to(self, t: float) -> None:
+    def advance_window(self, start: float, end: float) -> None:
+        t = float(end)
         session = self._ensure_session()
         output_name = self.model_output_name or self.output_port
         input_name = self.model_input_name or self.input_port
@@ -176,20 +231,8 @@ class {class_name}(BioModule):
         flat = _flatten(prediction)
         source = getattr(self, "_world_name", self.__class__.__name__)
         self._outputs = {{
-            self.output_port: BioSignal(
-                source=source,
-                name=self.output_port,
-                value=prediction,
-                time=t,
-                metadata=SignalMetadata(description="{title} output tensor", dtype="float32", shape=self.output_shape, kind="state"),
-            ),
-            self.summary_port: BioSignal(
-                source=source,
-                name=self.summary_port,
-                value={{"mean_probability": (sum(flat) / len(flat)) if flat else 0.0, "voxel_count": len(flat)}},
-                time=t,
-                metadata=SignalMetadata(description="Summary statistics over the latest MONAI output tensor", kind="metric"),
-            ),
+            self.output_port: _make_signal(source=source, name=self.output_port, value=prediction, emitted_at=t, spec=self.outputs().get(self.output_port) if 'self' in locals() else None),
+            self.summary_port: _make_signal(source=source, name=self.summary_port, value={{"mean_probability": (sum(flat) / len(flat)) if flat else 0.0, "voxel_count": len(flat)}}, emitted_at=t, spec=self.outputs().get(self.summary_port) if 'self' in locals() else None),
         }}
 
     def get_outputs(self) -> Dict[str, BioSignal]:
@@ -220,7 +263,7 @@ def test_imported_monai_model_emits_prediction_and_summary() -> None:
     signal = type("Sig", (), {{"value": [[[[[0.0] * 4 for _ in range(4)] for _ in range(4)]]],}})()
     model = {class_name}(session_factory=_FakeSession)
     model.set_inputs({{"volume_tensor": signal}})
-    model.advance_to(0.1)
+    model.advance_window(0.0, 0.1)
     outputs = model.get_outputs()
     assert "class_probabilities" in outputs
     assert "segmentation_summary" in outputs
@@ -231,13 +274,43 @@ def _class_name(slug: str) -> str:
     return "".join(part.capitalize() for part in re.split(r"[^a-zA-Z0-9]+", slug) if part)
 
 
+def _yaml_quote(value: str) -> str:
+    return '"' + value.replace("\\", "\\\\").replace('"', '\\"') + '"'
+
+
+def _write_lab_wrapper(lab_dir: Path, *, slug: str, model_title: str, model_description: str) -> None:
+    alias = re.sub(r"[^A-Za-z0-9_]+", "_", slug).strip("_") or "model"
+    lab_title = model_title if model_title.lower().endswith(" lab") else f"{model_title} Lab"
+    lab_description = (
+        model_description
+        if model_description.lower().startswith("single-model lab wrapper")
+        else f"Single-model lab wrapper for {model_title}. {model_description}"
+    )
+    lab_yaml = f"""schema_version: "2.0"
+title: {_yaml_quote(lab_title)}
+description: {_yaml_quote(lab_description)}
+models:
+  - alias: {_yaml_quote(alias)}
+    path: "models/core"
+wiring: []
+runtime:
+  duration: 0.01
+  communication_step: 0.01
+  initial_inputs: {{}}
+"""
+    (lab_dir / "lab.yaml").write_text(lab_yaml, encoding="utf-8")
+
+
 def scaffold_model(root: Path, item: dict[str, str]) -> None:
-    model_dir = root / "models" / item["slug"]
-    if model_dir.exists():
-        shutil.rmtree(model_dir)
+    lab_dir = root / "labs" / item["slug"]
+    model_dir = lab_dir / "models" / "core"
+    visual_dir = lab_dir / "models" / "visualisation"
+    if lab_dir.exists():
+        shutil.rmtree(lab_dir)
     src_dir = model_dir / "src"
     tests_dir = model_dir / "tests"
     artifacts_dir = model_dir / "artifacts"
+    visual_dir.mkdir(parents=True, exist_ok=True)
     src_dir.mkdir(parents=True, exist_ok=True)
     tests_dir.mkdir(parents=True, exist_ok=True)
     artifacts_dir.mkdir(parents=True, exist_ok=True)
@@ -277,10 +350,16 @@ source:
     )
     (model_dir / "import-metadata.json").write_text(json.dumps(item, indent=2), encoding="utf-8")
     (artifacts_dir / "README.md").write_text(
-        "Scaffolded MONAI import. Inspect the source bundle and export a stable ONNX artifact before indexing this model.\n",
+        "Scaffolded MONAI import. Inspect the source bundle and export a stable ONNX artifact before publishing this wrapper lab.\n",
         encoding="utf-8",
     )
     (artifacts_dir / "source-bundle-url.txt").write_text(item["source_url"] + "\n", encoding="utf-8")
+    _write_lab_wrapper(
+        lab_dir,
+        slug=item["slug"],
+        model_title=f"MONAI: {class_name}",
+        model_description=f"Scaffolded MONAI import for {item['title']} pending bundle inspection and ONNX export.",
+    )
     print(f"Scaffolded {item['slug']}")
 
 

@@ -1,0 +1,64 @@
+schema_version: '2.0'
+title: Bioimage Embryonet Base Visualisation
+description: Publication-facing visualisation for source-faithful ONNX runtime evidence.
+standard: other
+tags:
+- onnx
+- visualisation
+- publish-ready
+authors:
+- Biosimulant Team
+biosim:
+  communication_step: 0.01
+  entrypoint: src.onnx_visualisation:OnnxPublicationVisualisation
+  init_kwargs:
+    lab_title: Bioimage Embryonet Base
+    source_type: BioImage ONNX
+    task: classification
+    question: What does the source ONNX graph emit for this preprocessed embryo image
+      tensor?
+    answer_style: Report the top score index and tensor evidence without interpreting
+      synthetic input as embryo biology.
+    caveat: Runtime smoke uses synthetic tensors unless source sample data is added;
+      scores are graph outputs, not validated embryo-development evidence.
+    dominant_module: EmbryoNet classification head
+    public_input_note: 'Inputs are already-preprocessed ONNX tensors: `data`, `t_for_conv`,
+      and `t_for_fc`.'
+    input_contracts:
+    - name: data
+      dtype: float32
+      shape:
+      - 1
+      - 3
+      - 224
+      - 224
+    - name: t_for_conv
+      dtype: float32
+      shape:
+      - 1
+      - 1
+      - 224
+      - 224
+    - name: t_for_fc
+      dtype: float32
+      shape:
+      - 1
+      - 1
+    output_contracts:
+    - name: output
+      dtype: float32
+      shape:
+      - 14
+    visual_inputs:
+      embryo_development_scores:
+        payload: json
+      prediction_summary:
+        top_stage_index: int
+        top_score: float
+io:
+  inputs:
+  - name: embryo_development_scores
+    description: Runtime evidence from core output `embryo_development_scores`.
+  - name: prediction_summary
+    description: Runtime evidence from core output `prediction_summary`.
+  outputs: []

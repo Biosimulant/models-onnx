@@ -1,0 +1,21 @@
+schema_version: '2.0'
+title: Hf Allenai Scibert Scivocab Uncased Lab
+description: SciBERT scientific-text embedding exported to ONNX. This lab exposes
+  source-faithful ONNX runtime evidence without claiming scientific validity beyond
+  the source artifact.
+models:
+- alias: hf_allenai_scibert_scivocab_uncased
+  path: models/core
+- alias: visualisation
+  path: models/visualisation
+wiring:
+- from: hf_allenai_scibert_scivocab_uncased.sequence_embeddings
+  to:
+  - visualisation.sequence_embeddings
+- from: hf_allenai_scibert_scivocab_uncased.pooled_embedding
+  to:
+  - visualisation.pooled_embedding
+runtime:
+  duration: 0.02
+  communication_step: 0.01
+  initial_inputs: {}

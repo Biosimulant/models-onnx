@@ -1,0 +1,21 @@
+schema_version: '2.0'
+title: Bioimage Nucleisegmentationboundarymodel Lab
+description: Nuclei boundary segmentation from a BioImage.io ONNX graph. This lab
+  exposes source-faithful ONNX runtime evidence without claiming scientific validity
+  beyond the source artifact.
+models:
+- alias: bioimage_nuclei_segmentation_boundary
+  path: models/core
+- alias: visualisation
+  path: models/visualisation
+wiring:
+- from: bioimage_nuclei_segmentation_boundary.segmentation_logits
+  to:
+  - visualisation.segmentation_logits
+- from: bioimage_nuclei_segmentation_boundary.prediction_summary
+  to:
+  - visualisation.prediction_summary
+runtime:
+  duration: 0.02
+  communication_step: 0.01
+  initial_inputs: {}

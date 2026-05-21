@@ -17,9 +17,6 @@ from monai.networks.nets import DiNTS, DynUNet, SegResNet, SwinUNETR, TopologyIn
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-MODEL_ROOT = REPO_ROOT / "models"
-
-
 def build_spleen_ct() -> torch.nn.Module:
     model = UNet(
         spatial_dims=3,
@@ -135,7 +132,7 @@ def run_one(slug: str, builder: Callable[[], torch.nn.Module], input_shape: tupl
     with torch.no_grad():
         source = model(dummy).detach().cpu().numpy()
 
-    onnx_path = MODEL_ROOT / slug / "artifacts" / "model.onnx"
+    onnx_path = REPO_ROOT / "labs" / slug / "models" / "core" / "artifacts" / "model.onnx"
     session = ort.InferenceSession(str(onnx_path), providers=["CPUExecutionProvider"])
     ort_out = session.run(None, {"image": dummy.numpy()})[0]
     diff = np.abs(source - ort_out)

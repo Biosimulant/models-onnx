@@ -1,0 +1,65 @@
+schema_version: '2.0'
+title: Hf Emilyalsentzer Bio Clinicalbert Visualisation
+description: Publication-facing visualisation for source-faithful ONNX runtime evidence.
+standard: other
+tags:
+- onnx
+- visualisation
+- publish-ready
+authors:
+- Biosimulant Team
+biosim:
+  communication_step: 0.01
+  entrypoint: src.onnx_visualisation:OnnxPublicationVisualisation
+  init_kwargs:
+    lab_title: Hf Emilyalsentzer Bio Clinicalbert
+    source_type: Hugging Face ONNX export
+    task: embedding-generation
+    question: What embedding tensors does the ClinicalBERT ONNX export emit for these
+      already-tokenized clinical text inputs?
+    answer_style: Report sequence and pooled embedding statistics.
+    caveat: No tokenizer is bundled, so public inputs are token tensors rather than
+      raw text.
+    dominant_module: ClinicalBERT embedding graph
+    public_input_note: Inputs map to ONNX `input_ids` and `attention_mask`; tokenizer
+      preprocessing is not bundled.
+    input_contracts:
+    - name: input_ids
+      dtype: int64
+      shape:
+      - 1
+      - 16
+    - name: attention_mask
+      dtype: int64
+      shape:
+      - 1
+      - 16
+    - name: token_type_ids
+      dtype: int64
+      shape:
+      - 1
+      - 16
+    output_contracts:
+    - name: last_hidden_state
+      dtype: float32
+      shape:
+      - 1
+      - 16
+      - 768
+    - name: pooled_output
+      dtype: float32
+      shape:
+      - 1
+      - 768
+    visual_inputs:
+      sequence_embeddings:
+        payload: json
+      pooled_embedding:
+        payload: json
+io:
+  inputs:
+  - name: sequence_embeddings
+    description: Runtime evidence from core output `sequence_embeddings`.
+  - name: pooled_embedding
+    description: Runtime evidence from core output `pooled_embedding`.
+  outputs: []

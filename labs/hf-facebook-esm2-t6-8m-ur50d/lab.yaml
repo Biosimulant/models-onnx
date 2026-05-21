@@ -1,0 +1,21 @@
+schema_version: '2.0'
+title: Hf Facebook Esm2 T68m Ur50d Lab
+description: ESM-2 t6 protein-language embedding exported to ONNX. This lab exposes
+  source-faithful ONNX runtime evidence without claiming scientific validity beyond
+  the source artifact.
+models:
+- alias: hf_facebook_esm2_t6_8m_ur50d
+  path: models/core
+- alias: visualisation
+  path: models/visualisation
+wiring:
+- from: hf_facebook_esm2_t6_8m_ur50d.sequence_embeddings
+  to:
+  - visualisation.sequence_embeddings
+- from: hf_facebook_esm2_t6_8m_ur50d.pooled_embedding
+  to:
+  - visualisation.pooled_embedding
+runtime:
+  duration: 0.02
+  communication_step: 0.01
+  initial_inputs: {}

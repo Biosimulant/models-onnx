@@ -1,0 +1,21 @@
+schema_version: '2.0'
+title: Hf Emilyalsentzer Bio Clinicalbert Lab
+description: ClinicalBERT clinical-text embedding exported to ONNX. This lab exposes
+  source-faithful ONNX runtime evidence without claiming scientific validity beyond
+  the source artifact.
+models:
+- alias: hf_emilyalsentzer_bio_clinicalbert
+  path: models/core
+- alias: visualisation
+  path: models/visualisation
+wiring:
+- from: hf_emilyalsentzer_bio_clinicalbert.sequence_embeddings
+  to:
+  - visualisation.sequence_embeddings
+- from: hf_emilyalsentzer_bio_clinicalbert.pooled_embedding
+  to:
+  - visualisation.pooled_embedding
+runtime:
+  duration: 0.02
+  communication_step: 0.01
+  initial_inputs: {}

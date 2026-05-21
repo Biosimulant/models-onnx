@@ -1,0 +1,56 @@
+schema_version: '2.0'
+title: Bioimage Hylfm Net Stat Visualisation
+description: Publication-facing visualisation for source-faithful ONNX runtime evidence.
+standard: other
+tags:
+- onnx
+- visualisation
+- publish-ready
+authors:
+- Biosimulant Team
+biosim:
+  communication_step: 0.01
+  entrypoint: src.onnx_visualisation:OnnxPublicationVisualisation
+  init_kwargs:
+    lab_title: Bioimage Hylfm Net Stat
+    source_type: BioImage ONNX
+    task: image-reconstruction
+    question: What reconstruction tensor does the source HyLFM ONNX graph emit for
+      this preprocessed light-field image tensor?
+    answer_style: Report reconstruction shape and value statistics as source graph
+      output evidence.
+    caveat: Synthetic input validates wiring only; image quality requires source or
+      experimental light-field data.
+    dominant_module: HyLFM reconstruction graph
+    public_input_note: Input maps to ONNX graph input `0` and is an already-preprocessed
+      light-field image tensor.
+    input_contracts:
+    - name: '0'
+      dtype: float32
+      shape:
+      - 1
+      - 1
+      - 1235
+      - 1425
+    output_contracts:
+    - name: '220'
+      dtype: float32
+      shape:
+      - 1
+      - 1
+      - 49
+      - 244
+      - 284
+    visual_inputs:
+      reconstruction_volume:
+        payload: json
+      prediction_summary:
+        mean_value: float
+        voxel_count: int
+io:
+  inputs:
+  - name: reconstruction_volume
+    description: Runtime evidence from core output `reconstruction_volume`.
+  - name: prediction_summary
+    description: Runtime evidence from core output `prediction_summary`.
+  outputs: []

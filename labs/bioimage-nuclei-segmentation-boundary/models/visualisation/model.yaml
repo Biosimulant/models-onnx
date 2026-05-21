@@ -1,0 +1,55 @@
+schema_version: '2.0'
+title: Bioimage Nucleisegmentationboundarymodel Visualisation
+description: Publication-facing visualisation for source-faithful ONNX runtime evidence.
+standard: other
+tags:
+- onnx
+- visualisation
+- publish-ready
+authors:
+- Biosimulant Team
+biosim:
+  communication_step: 0.01
+  entrypoint: src.onnx_visualisation:OnnxPublicationVisualisation
+  init_kwargs:
+    lab_title: Bioimage Nucleisegmentationboundarymodel
+    source_type: BioImage ONNX
+    task: segmentation
+    question: What segmentation-logit tensor does this source nuclei-boundary ONNX
+      graph emit for the supplied preprocessed nuclei image?
+    answer_style: Report logit tensor statistics and pixel-count evidence without
+      claiming segmentation quality from synthetic input.
+    caveat: Synthetic input validates ONNX execution only; segmentation accuracy needs
+      source validation images.
+    dominant_module: Nuclei boundary segmentation graph
+    public_input_note: Input maps to ONNX graph input `input.1` and is an already-preprocessed
+      nuclei image tensor.
+    input_contracts:
+    - name: input.1
+      dtype: float32
+      shape:
+      - 1
+      - 1
+      - 256
+      - 256
+    output_contracts:
+    - name: 506
+      dtype: float32
+      shape:
+      - 1
+      - 2
+      - 256
+      - 256
+    visual_inputs:
+      segmentation_logits:
+        payload: json
+      prediction_summary:
+        mean_logit: float
+        pixel_count: int
+io:
+  inputs:
+  - name: segmentation_logits
+    description: Runtime evidence from core output `segmentation_logits`.
+  - name: prediction_summary
+    description: Runtime evidence from core output `prediction_summary`.
+  outputs: []

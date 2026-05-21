@@ -1,0 +1,21 @@
+schema_version: '2.0'
+title: Bioimage Hylfm Net Stat Lab
+description: HyLFM light-field microscopy reconstruction from a BioImage.io ONNX graph.
+  This lab exposes source-faithful ONNX runtime evidence without claiming scientific
+  validity beyond the source artifact.
+models:
+- alias: bioimage_hylfm_light_field_reconstruction
+  path: models/core
+- alias: visualisation
+  path: models/visualisation
+wiring:
+- from: bioimage_hylfm_light_field_reconstruction.reconstruction_volume
+  to:
+  - visualisation.reconstruction_volume
+- from: bioimage_hylfm_light_field_reconstruction.prediction_summary
+  to:
+  - visualisation.prediction_summary
+runtime:
+  duration: 0.02
+  communication_step: 0.01
+  initial_inputs: {}

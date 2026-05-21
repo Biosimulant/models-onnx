@@ -1,0 +1,21 @@
+schema_version: '2.0'
+title: Monai Spleen Deepedit Annotation Lab
+description: Spleen DeepEdit annotation exported from a MONAI bundle. This lab exposes
+  source-faithful ONNX runtime evidence without claiming scientific validity beyond
+  the source artifact.
+models:
+- alias: monai_spleen_deepedit_annotation
+  path: models/core
+- alias: visualisation
+  path: models/visualisation
+wiring:
+- from: monai_spleen_deepedit_annotation.segmentation_prediction_tensor
+  to:
+  - visualisation.segmentation_prediction_tensor
+- from: monai_spleen_deepedit_annotation.segmentation_summary
+  to:
+  - visualisation.segmentation_summary
+runtime:
+  duration: 0.02
+  communication_step: 0.01
+  initial_inputs: {}

@@ -1,52 +1,52 @@
 # models-onnx
 
-Curated ONNX-first repository for a 15-model published AI/ML shortlist that
-BioSimulant can wrap behind the standard `biosim.BioModule` contract.
+Curated ONNX-first Biosimulant repository for 15 source-derived AI/ML labs. Each lab keeps the bundled ONNX artifact as
+the executable source-derived model and exposes conservative Biosimulant ports, runtime evidence, and visualisations.
 
 ## What's Inside
 
-Current shortlist counts:
+- 5 BioImage.io ONNX imports
+- 5 MONAI bundle exports to ONNX
+- 5 Hugging Face biology, biomedical, or protein-language ONNX exports
 
-- `5` BioImage models
-- `5` MONAI bundles
-- `5` Hugging Face biology / biomedical models
+All kept labs use:
 
-Current readiness split:
+```text
+labs/<slug>/
+  lab.yaml
+  README.md
+  assets/
+  models/core/
+    model.yaml
+    artifacts/model.onnx
+    src/
+    tests/
+  models/visualisation/
+    model.yaml
+    src/
+    tests/
+```
 
-- `5` `standardized-near-ready`
-- `5` `convertible-needs-export`
-- `5` `likely-convertible-transformer`
+## Scientific Accuracy Scope
 
-Current implementation status:
+These labs validate source-faithful ONNX execution and Biosimulant wiring. They do not claim clinical safety, biological
+truth, microscopy performance, or paper-figure reproduction unless a source validation dataset or stored reference
+comparison is added.
 
-- `15` imported
-- `0` scaffolded
+Runtime smoke tests use synthetic tensors when source sample data is unavailable. Synthetic inference proves graph load,
+shape compatibility, finite outputs, and visual payloads; it is not scientific evidence for model performance.
 
-## First Published BioImage Batch
+## Lab Set
 
-The first published BioImage ONNX batch has been materialized into real indexed
-model folders:
+BioImage.io:
 
-- `bioimage-nucleisegmentationboundarymodel`
+- `bioimage-embryonet-embryo-stage-classification`
 - `bioimage-hpa-bestfitting-inceptionv3`
 - `bioimage-hpa-bestfitting-densenet`
-- `bioimage-embryonet-base-model`
-- `bioimage-hylfm-net-stat`
+- `bioimage-hylfm-light-field-reconstruction`
+- `bioimage-nuclei-segmentation-boundary`
 
-Those folders include:
-
-- `model.yaml`
-- `src/` BioModule wrappers
-- `tests/`
-- `import-metadata.json`
-- `artifacts/model.onnx`
-- `artifacts/source-url.txt`
-
-All five of those BioImage models are now materialized and indexed.
-
-## MONAI Batch
-
-The MONAI export batch is now materialized and indexed as real imported model folders:
+MONAI:
 
 - `monai-spleen-ct-segmentation`
 - `monai-pancreas-ct-dints-segmentation`
@@ -54,23 +54,7 @@ The MONAI export batch is now materialized and indexed as real imported model fo
 - `monai-spleen-deepedit-annotation`
 - `monai-swin-unetr-btcv-segmentation`
 
-These were published as MONAI bundles rather than ready-made ONNX artifacts, so
-each one was exported into a checked-in ONNX model and validated locally. Each
-folder includes:
-
-- `model.yaml`
-- `src/` wrapper
-- `tests/`
-- `import-metadata.json`
-- `artifacts/model.onnx`
-- `artifacts/export-metadata.json`
-
-All five MONAI models are now imported and indexed.
-
-## Transformer Batch
-
-The lighter transformer export batch is now materialized and indexed as real
-imported model folders:
+Hugging Face:
 
 - `hf-emilyalsentzer-bio-clinicalbert`
 - `hf-facebook-esm2-t6-8m-ur50d`
@@ -78,56 +62,25 @@ imported model folders:
 - `hf-facebook-esm2-t12-35m-ur50d`
 - `hf-allenai-scibert-scivocab-uncased`
 
-Each folder includes:
+## Validation
 
-- `model.yaml`
-- `src/` wrapper
-- `tests/`
-- `import-metadata.json`
-- `artifacts/model.onnx`
-- `artifacts/export-metadata.json`
-
-All five transformer models are now imported and indexed.
-
-## First-Wave Scope
-
-This repository is the current 15-model implementation pass for:
-
-- BioImage imports with strong existing metadata
-- MONAI bundles that can be exported or adapted into ONNX
-- simpler transformer checkpoints that are realistic ONNX export targets
-
-This repository is the active short list for what it carries right now.
-
-## Validation Status
-
-Operational import and runtime validation are complete for the active 15-model
-set. Project-side scientific validation planning and tracking are maintained
-outside the published repository.
-
-## Layout
-
-```text
-models-onnx/
-├── biosim-index.yaml
-├── models/
-│   ├── bioimage-*/
-│   ├── monai-*/
-│   └── hf-*/
-├── scripts/
-├── README.md
-└── STANDARDS.md
-```
-
-## Getting Started
-
-Imported models depend on `biosim` plus ONNX Runtime:
+Use a Python environment with `biosim`, `onnxruntime==1.22.1`, `numpy`, `pytest`, and `pyyaml`.
 
 ```bash
-pip install "biosim @ git+https://github.com/BioSimulant/biosim.git@main"
-pip install onnxruntime==1.22.1
+export PYTHONPATH=/Volumes/dem-ssd/imp/projects/Nitoons/Biosimulant/bsim-active/biosim/src
+python scripts/validate_manifests.py
+python scripts/check_entrypoints.py
+python scripts/audit_publish_ready.py
+python scripts/validate_onnx_runtime.py
+python scripts/audit_readme_assets.py
+python -m compileall -q labs scripts tests
+python -m pytest -q
 ```
+
+`scripts/validate_monai_source_parity.py` remains a best-effort parity check for MONAI exports when the source PyTorch
+weights are present in the local validation cache.
 
 ## License
 
-Dual-licensed: Apache-2.0 (code), CC BY 4.0 (content and inventory metadata).
+Dual-licensed: Apache-2.0 for code and CC BY 4.0 for content and inventory metadata, subject to the upstream model
+licenses recorded in each lab manifest.

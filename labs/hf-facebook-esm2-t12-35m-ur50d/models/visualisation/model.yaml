@@ -1,0 +1,60 @@
+schema_version: '2.0'
+title: Hf Facebook Esm2 T1235m Ur50d Visualisation
+description: Publication-facing visualisation for source-faithful ONNX runtime evidence.
+standard: other
+tags:
+- onnx
+- visualisation
+- publish-ready
+authors:
+- Biosimulant Team
+biosim:
+  communication_step: 0.01
+  entrypoint: src.onnx_visualisation:OnnxPublicationVisualisation
+  init_kwargs:
+    lab_title: Hf Facebook Esm2 T1235m Ur50d
+    source_type: Hugging Face ONNX export
+    task: embedding-generation
+    question: What protein embedding tensors does the ESM-2 t12 ONNX export emit for
+      these already-tokenized protein sequence inputs?
+    answer_style: Report sequence and pooled embedding statistics.
+    caveat: No tokenizer is bundled, so public inputs are token tensors rather than
+      amino-acid sequence strings.
+    dominant_module: ESM-2 protein embedding graph
+    public_input_note: Inputs map to ONNX `input_ids` and `attention_mask`; sequence
+      tokenization is not bundled.
+    input_contracts:
+    - name: input_ids
+      dtype: int64
+      shape:
+      - batch
+      - sequence
+    - name: attention_mask
+      dtype: int64
+      shape:
+      - batch
+      - sequence
+    output_contracts:
+    - name: last_hidden_state
+      dtype: float32
+      shape:
+      - batch
+      - sequence
+      - 480
+    - name: pooled_output
+      dtype: float32
+      shape:
+      - batch
+      - 480
+    visual_inputs:
+      sequence_embeddings:
+        payload: json
+      pooled_embedding:
+        payload: json
+io:
+  inputs:
+  - name: sequence_embeddings
+    description: Runtime evidence from core output `sequence_embeddings`.
+  - name: pooled_embedding
+    description: Runtime evidence from core output `pooled_embedding`.
+  outputs: []

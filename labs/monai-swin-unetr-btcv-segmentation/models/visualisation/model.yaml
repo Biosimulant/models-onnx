@@ -1,0 +1,56 @@
+schema_version: '2.0'
+title: Monai Swin Unetr Btcv Segmentation Visualisation
+description: Publication-facing visualisation for source-faithful ONNX runtime evidence.
+standard: other
+tags:
+- onnx
+- visualisation
+- publish-ready
+authors:
+- Biosimulant Team
+biosim:
+  communication_step: 0.01
+  entrypoint: src.onnx_visualisation:OnnxPublicationVisualisation
+  init_kwargs:
+    lab_title: Monai Swin Unetr Btcv Segmentation
+    source_type: MONAI ONNX export
+    task: segmentation
+    question: What segmentation prediction tensor does the source MONAI BTCV ONNX
+      export emit for this CT volume tensor?
+    answer_style: Report output tensor shape, channel count, and value statistics.
+    caveat: Synthetic input validates ONNX execution only; organ-label interpretation
+      requires source label metadata.
+    dominant_module: MONAI BTCV Swin UNETR segmentation graph
+    public_input_note: Input maps to ONNX graph input `image` and is a preprocessed
+      CT volume tensor.
+    input_contracts:
+    - name: image
+      dtype: float32
+      shape:
+      - 1
+      - 1
+      - 96
+      - 96
+      - 96
+    output_contracts:
+    - name: pred
+      dtype: float32
+      shape:
+      - 1
+      - 14
+      - 96
+      - 96
+      - 96
+    visual_inputs:
+      segmentation_prediction_tensor:
+        payload: json
+      segmentation_summary:
+        mean_probability: float
+        voxel_count: int
+io:
+  inputs:
+  - name: segmentation_prediction_tensor
+    description: Runtime evidence from core output `segmentation_prediction_tensor`.
+  - name: segmentation_summary
+    description: Runtime evidence from core output `segmentation_summary`.
+  outputs: []

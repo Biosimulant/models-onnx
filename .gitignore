@@ -6,3 +6,6 @@
 __pycache__/
 validation/
 artifacts/export-cache/
+artifacts/release-packages/
+tmp/
+.biosimulant-project.json

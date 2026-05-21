@@ -1,0 +1,24 @@
+schema_version: '2.0'
+title: Bioimage Hpa Bestfitting Densenet Lab
+description: Human Protein Atlas image classification and feature embedding from a
+  BioImage.io DenseNet ONNX graph. This lab exposes source-faithful ONNX runtime evidence
+  without claiming scientific validity beyond the source artifact.
+models:
+- alias: bioimage_hpa_bestfitting_densenet
+  path: models/core
+- alias: visualisation
+  path: models/visualisation
+wiring:
+- from: bioimage_hpa_bestfitting_densenet.classification_scores
+  to:
+  - visualisation.classification_scores
+- from: bioimage_hpa_bestfitting_densenet.feature_embedding
+  to:
+  - visualisation.feature_embedding
+- from: bioimage_hpa_bestfitting_densenet.prediction_summary
+  to:
+  - visualisation.prediction_summary
+runtime:
+  duration: 0.02
+  communication_step: 0.01
+  initial_inputs: {}

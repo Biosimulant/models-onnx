@@ -1,0 +1,62 @@
+schema_version: '2.0'
+title: Bioimage Hpa Bestfitting Inceptionv3 Visualisation
+description: Publication-facing visualisation for source-faithful ONNX runtime evidence.
+standard: other
+tags:
+- onnx
+- visualisation
+- publish-ready
+authors:
+- Biosimulant Team
+biosim:
+  communication_step: 0.01
+  entrypoint: src.onnx_visualisation:OnnxPublicationVisualisation
+  init_kwargs:
+    lab_title: Bioimage Hpa Bestfitting Inceptionv3
+    source_type: BioImage ONNX
+    task: classification
+    question: What class-score and embedding tensors does this source HPA InceptionV3
+      graph emit for the supplied preprocessed cell image tensor?
+    answer_style: Report score and embedding statistics without inventing cell-label
+      semantics.
+    caveat: Class labels are not asserted unless source metadata provides them; synthetic
+      input validates runtime only.
+    dominant_module: HPA InceptionV3 classification and feature heads
+    public_input_note: Input maps to ONNX graph input `image` and is an already-preprocessed
+      cell image tensor.
+    input_contracts:
+    - name: image
+      dtype: float32
+      shape:
+      - 1
+      - 4
+      - 128
+      - 128
+    output_contracts:
+    - name: classes
+      dtype: float32
+      shape:
+      - 1
+      - 19
+    - name: features
+      dtype: float32
+      shape:
+      - 1
+      - 2048
+    visual_inputs:
+      classification_scores:
+        payload: json
+      feature_embedding:
+        payload: json
+      prediction_summary:
+        top_class_index: int
+        top_score: float
+io:
+  inputs:
+  - name: classification_scores
+    description: Runtime evidence from core output `classification_scores`.
+  - name: feature_embedding
+    description: Runtime evidence from core output `feature_embedding`.
+  - name: prediction_summary
+    description: Runtime evidence from core output `prediction_summary`.
+  outputs: []

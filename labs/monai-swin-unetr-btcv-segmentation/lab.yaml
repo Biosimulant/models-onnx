@@ -1,0 +1,21 @@
+schema_version: '2.0'
+title: Monai Swin Unetr Btcv Segmentation Lab
+description: BTCV multi-organ CT segmentation exported from a MONAI Swin UNETR bundle.
+  This lab exposes source-faithful ONNX runtime evidence without claiming scientific
+  validity beyond the source artifact.
+models:
+- alias: monai_swin_unetr_btcv_segmentation
+  path: models/core
+- alias: visualisation
+  path: models/visualisation
+wiring:
+- from: monai_swin_unetr_btcv_segmentation.segmentation_prediction_tensor
+  to:
+  - visualisation.segmentation_prediction_tensor
+- from: monai_swin_unetr_btcv_segmentation.segmentation_summary
+  to:
+  - visualisation.segmentation_summary
+runtime:
+  duration: 0.02
+  communication_step: 0.01
+  initial_inputs: {}
