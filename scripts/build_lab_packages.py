@@ -91,8 +91,22 @@ def copy_tree_filtered(source: Path, target: Path) -> None:
         if item.is_dir():
             destination.mkdir(parents=True, exist_ok=True)
         else:
+            if item.suffix == ".onnx" and is_git_lfs_pointer(item):
+                raise ValueError(
+                    f"{item} is a Git LFS pointer, not an ONNX artifact. "
+                    "Run `git lfs pull` before packaging."
+                )
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(item, destination)
+
+
+def is_git_lfs_pointer(path: Path) -> bool:
+    try:
+        with path.open("rb") as handle:
+            prefix = handle.read(128)
+    except OSError:
+        return False
+    return prefix.startswith(b"version https://git-lfs.github.com/spec/v1")
 
 
 def stage_lab(lab_dir: Path, staging_dir: Path) -> dict[str, Any]:
