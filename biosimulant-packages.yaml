@@ -1,0 +1,94 @@
+schema_version: "1"
+namespace: demi
+default_visibility: public
+packages:
+  - id: bioimage-embryonet-embryo-stage-classification-lab
+    package: bioimage-embryonet-embryo-stage-classification
+    version: 1.0.0
+    type: lab
+    path: labs/bioimage-embryonet-embryo-stage-classification
+    visibility: public
+  - id: bioimage-hpa-bestfitting-densenet-lab
+    package: bioimage-hpa-bestfitting-densenet
+    version: 1.0.0
+    type: lab
+    path: labs/bioimage-hpa-bestfitting-densenet
+    visibility: public
+  - id: bioimage-hpa-bestfitting-inceptionv3-lab
+    package: bioimage-hpa-bestfitting-inceptionv3
+    version: 1.0.0
+    type: lab
+    path: labs/bioimage-hpa-bestfitting-inceptionv3
+    visibility: public
+  - id: bioimage-hylfm-light-field-reconstruction-lab
+    package: bioimage-hylfm-light-field-reconstruction
+    version: 1.0.0
+    type: lab
+    path: labs/bioimage-hylfm-light-field-reconstruction
+    visibility: public
+  - id: bioimage-nuclei-segmentation-boundary-lab
+    package: bioimage-nuclei-segmentation-boundary
+    version: 1.0.0
+    type: lab
+    path: labs/bioimage-nuclei-segmentation-boundary
+    visibility: public
+  - id: hf-allenai-scibert-scivocab-uncased-lab
+    package: hf-allenai-scibert-scivocab-uncased
+    version: 1.0.0
+    type: lab
+    path: labs/hf-allenai-scibert-scivocab-uncased
+    visibility: public
+  - id: hf-dmis-lab-biobert-base-cased-v1-1-lab
+    package: hf-dmis-lab-biobert-base-cased-v1-1
+    version: 1.0.0
+    type: lab
+    path: labs/hf-dmis-lab-biobert-base-cased-v1-1
+    visibility: public
+  - id: hf-emilyalsentzer-bio-clinicalbert-lab
+    package: hf-emilyalsentzer-bio-clinicalbert
+    version: 1.0.0
+    type: lab
+    path: labs/hf-emilyalsentzer-bio-clinicalbert
+    visibility: public
+  - id: hf-facebook-esm2-t12-35m-ur50d-lab
+    package: hf-facebook-esm2-t12-35m-ur50d
+    version: 1.0.0
+    type: lab
+    path: labs/hf-facebook-esm2-t12-35m-ur50d
+    visibility: public
+  - id: hf-facebook-esm2-t6-8m-ur50d-lab
+    package: hf-facebook-esm2-t6-8m-ur50d
+    version: 1.0.0
+    type: lab
+    path: labs/hf-facebook-esm2-t6-8m-ur50d
+    visibility: public
+  - id: monai-brats-mri-segmentation-lab
+    package: monai-brats-mri-segmentation
+    version: 1.0.0
+    type: lab
+    path: labs/monai-brats-mri-segmentation
+    visibility: public
+  - id: monai-pancreas-ct-dints-segmentation-lab
+    package: monai-pancreas-ct-dints-segmentation
+    version: 1.0.0
+    type: lab
+    path: labs/monai-pancreas-ct-dints-segmentation
+    visibility: public
+  - id: monai-spleen-ct-segmentation-lab
+    package: monai-spleen-ct-segmentation
+    version: 1.0.0
+    type: lab
+    path: labs/monai-spleen-ct-segmentation
+    visibility: public
+  - id: monai-spleen-deepedit-annotation-lab
+    package: monai-spleen-deepedit-annotation
+    version: 1.0.0
+    type: lab
+    path: labs/monai-spleen-deepedit-annotation
+    visibility: public
+  - id: monai-swin-unetr-btcv-segmentation-lab
+    package: monai-swin-unetr-btcv-segmentation
+    version: 1.0.0
+    type: lab
+    path: labs/monai-swin-unetr-btcv-segmentation
+    visibility: public

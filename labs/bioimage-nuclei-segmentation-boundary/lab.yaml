@@ -1,4 +1,6 @@
 schema_version: '2.0'
+package: bioimage-nuclei-segmentation-boundary
+version: 1.0.0
 title: Bioimage Nucleisegmentationboundarymodel Lab
 description: Nuclei boundary segmentation from a BioImage.io ONNX graph. This lab
   exposes source-faithful ONNX runtime evidence without claiming scientific validity

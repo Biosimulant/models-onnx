@@ -1,4 +1,6 @@
 schema_version: '2.0'
+package: hf-facebook-esm2-t12-35m-ur50d
+version: 1.0.0
 title: Hf Facebook Esm2 T1235m Ur50d Lab
 description: ESM-2 t12 protein-language embedding exported to ONNX. This lab exposes
   source-faithful ONNX runtime evidence without claiming scientific validity beyond

@@ -1,4 +1,6 @@
 schema_version: '2.0'
+package: hf-emilyalsentzer-bio-clinicalbert
+version: 1.0.0
 title: Hf Emilyalsentzer Bio Clinicalbert Lab
 description: ClinicalBERT clinical-text embedding exported to ONNX. This lab exposes
   source-faithful ONNX runtime evidence without claiming scientific validity beyond

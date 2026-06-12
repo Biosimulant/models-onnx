@@ -1,4 +1,6 @@
 schema_version: '2.0'
+package: bioimage-hylfm-light-field-reconstruction
+version: 1.0.0
 title: Bioimage Hylfm Net Stat Lab
 description: HyLFM light-field microscopy reconstruction from a BioImage.io ONNX graph.
   This lab exposes source-faithful ONNX runtime evidence without claiming scientific

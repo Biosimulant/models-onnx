@@ -1,4 +1,6 @@
 schema_version: '2.0'
+package: monai-brats-mri-segmentation
+version: 1.0.0
 title: Monai Brats Mri Segmentation Lab
 description: BRATS multimodal MRI segmentation exported from a MONAI bundle. This
   lab exposes source-faithful ONNX runtime evidence without claiming scientific validity

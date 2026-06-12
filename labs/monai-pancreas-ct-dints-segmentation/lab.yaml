@@ -1,4 +1,6 @@
 schema_version: '2.0'
+package: monai-pancreas-ct-dints-segmentation
+version: 1.0.0
 title: Monai Pancreas Ct Dints Segmentation Lab
 description: Pancreas CT DiNTS segmentation exported from a MONAI bundle. This lab
   exposes source-faithful ONNX runtime evidence without claiming scientific validity

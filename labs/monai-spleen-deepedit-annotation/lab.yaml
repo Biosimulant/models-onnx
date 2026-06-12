@@ -1,4 +1,6 @@
 schema_version: '2.0'
+package: monai-spleen-deepedit-annotation
+version: 1.0.0
 title: Monai Spleen Deepedit Annotation Lab
 description: Spleen DeepEdit annotation exported from a MONAI bundle. This lab exposes
   source-faithful ONNX runtime evidence without claiming scientific validity beyond

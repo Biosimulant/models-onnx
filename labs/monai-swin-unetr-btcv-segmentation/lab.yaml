@@ -1,4 +1,6 @@
 schema_version: '2.0'
+package: monai-swin-unetr-btcv-segmentation
+version: 1.0.0
 title: Monai Swin Unetr Btcv Segmentation Lab
 description: BTCV multi-organ CT segmentation exported from a MONAI Swin UNETR bundle.
   This lab exposes source-faithful ONNX runtime evidence without claiming scientific

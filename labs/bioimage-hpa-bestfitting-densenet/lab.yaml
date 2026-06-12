@@ -1,4 +1,6 @@
 schema_version: '2.0'
+package: bioimage-hpa-bestfitting-densenet
+version: 1.0.0
 title: Bioimage Hpa Bestfitting Densenet Lab
 description: Human Protein Atlas image classification and feature embedding from a
   BioImage.io DenseNet ONNX graph. This lab exposes source-faithful ONNX runtime evidence
